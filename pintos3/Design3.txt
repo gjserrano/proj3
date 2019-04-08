@@ -8,9 +8,9 @@
 
 >> Fill in the names of your group members.
 
-FirstName LastName
-FirstName LastName
-FirstName LastName
+Blake Holman
+Gabe Serrano
+Cullen Povilonis
 
 ---- PRELIMINARIES ----
 
@@ -29,10 +29,14 @@ FirstName LastName
 >> A1: In a few paragraphs, describe the existing code for locating the
 >> frame, if any, that contains the data of a given page.
 
+Every page is a struct that holds data and pointers, such as a frame struct that has a pointer locating the kernel virtual address that contains its data and a page owner reference. A page is created NULL and gets a frame by using the frame_alloc_and_lock() method. When the system is looking for a free frame, it uses frame_alloc_and_lock() to find one, which it keeps trying to get memory for a new frame allocation, and if no sizeable memory is available, then it creates room by getting rid of an existing frame, and is then returned with data for the associated page, unless it cannot get rid of a frame, then it cancels the new frame creation.
+
 ---- SYNCHRONIZATION ----
 
 >> A2: When two user processes both need a new frame at the same time,
 >> how are races avoided?
+
+It is not possible to do two processes at one time, as scan_lock prevents multiple, and every frme contains a lock stating if occupied, so two processes cannot get the same frame ever.
 
 		       PAGING TO AND FROM DISK
 		       =======================
@@ -85,14 +89,22 @@ the quarter.
 >> In your opinion, was this assignment, or any one of the three problems
 >> in it, too easy or too hard?  Did it take too long or too little time?
 
+This was one of the easier projects for us, as the topics were very interesting and provided a good base to understand and figure out more about pages and tables.
+
 >> Did you find that working on a particular part of the assignment gave
 >> you greater insight into some aspect of OS design?
+
+Not any particular part of the project provided more, mainly just the base reading and understanding of what the base code provided provided the most insight.
 
 >> Is there some particular fact or hint we should give students in
 >> future quarters to help them solve the problems?  Conversely, did you
 >> find any of our guidance to be misleading?
 
+No, this project seems very straight forward and has enough base code provided to gain a better understanding of the topics being worked on in project 3.
+
 >> Do you have any suggestions for the TAs to more effectively assist
 >> students, either for future quarters or the remaining projects?
+
+No, the TA's were great for us when we needed help for this project.
 
 >> Any other comments?

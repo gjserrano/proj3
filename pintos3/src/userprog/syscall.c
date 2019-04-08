@@ -505,13 +505,10 @@ static void
 unmap (struct mapping *m) 
 {
 /* add code here */
- /* Remove this mapping from the list of mappings for this process. */
-  list_remove(&m->elem);
-
-  /* For each page in the memory mapped file... */
-  for(int i = 0; i < m->page_cnt; i++)
+  list_remove(&m->elem); /* Remove the mapping from the list. */
+  for(int i = 0; i < m->page_cnt; i++) /* Loops through each page in the memory mapped files */
   {
-    /* ...determine whether or not the page is dirty (modified). If so, write that page back out to disk. */
+    /* if the page is dirty write it back out to the disk. */
     if (pagedir_is_dirty(thread_current()->pagedir, ((const void *) ((m->base) + (PGSIZE * i)))))
     {
       lock_acquire (&fs_lock);
@@ -519,11 +516,9 @@ unmap (struct mapping *m)
       lock_release (&fs_lock);
     }
   }
-
-  /* Finally, deallocate all memory mapped pages (free up the process memory). */
   for(int i = 0; i < m->page_cnt; i++)
   {
-    page_deallocate((void *) ((m->base) + (PGSIZE * i)));
+    page_deallocate((void *) ((m->base) + (PGSIZE * i))); /* deallocate the mem. mapped pages. */
   }
 }
  
